@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Weather-App.css";
+import axios from "../../../node_modules/axios/dist/axios";
 
 const api = {
   key: "12040d26242efedf3d0eafc7f6d14350",
@@ -81,12 +82,113 @@ const WeatherApp = () => {
             <div className="location-box">
               <div className="location">
                 {weather.name}, {weather.sys.country}
+                <div className="date">{dateBuilder(new Date())}</div>
+                <div className="temp">
+                  {Math.round(weather.main.temp)}°c
+                  <div>
+                    <span className="weather">{weather.weather[0].main}</span>
+                  </div>
+                </div>
+                <div className="container">
+                  <div>
+                    <table>
+                      <tbody>
+                        <tr className="section1">
+                          <td>
+                            <h4>High/Low :</h4>
+                          </td>
+                          <td>
+                            <span>
+                              {Math.floor(weather.main.temp_max - 273.15)} /{" "}
+                              {Math.floor(weather.main.temp_min - 273.15)}º
+                            </span>
+                          </td>
+                        </tr>
+                        <br />
+                        <tr className="section1">
+                          <td>
+                            <h4>Humidity :</h4>
+                          </td>
+                          <td>
+                            <span>{weather.main.humidity} %</span>
+                          </td>
+                        </tr>
+                        <br />
+                        <tr className="section1">
+                          <td>
+                            <h4>Pressure :</h4>
+                          </td>
+                          <td>
+                            <span>{weather.main.pressure} hPa</span>
+                          </td>
+                        </tr>
+                        <br />
+                        <tr className="section1">
+                          <td>
+                            <h4>Visibilty :</h4>
+                          </td>
+                          <td>
+                            <span>{weather.visibility / 1000} km</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <table>
+                      <tbody>
+                        <tr className="section2">
+                          <td>
+                            <h4>Wind :</h4>
+                          </td>
+                          <td>
+                            <span>
+                              {Math.floor((weather.wind.speed * 18) / 5)}km/hr
+                            </span>
+                          </td>
+                        </tr>
+                        <br />
+
+                        <tr className="section2">
+                          <td>
+                            <h4>Wind Direction :</h4>
+                          </td>
+                          <td>
+                            <span>{weather.wind.deg}ºdeg</span>
+                          </td>
+                        </tr>
+                        <br />
+
+                        <tr className="section2">
+                          <td>
+                            <h4>Sunrise :</h4>
+                          </td>
+                          <td>
+                            <span>
+                              {new Date(
+                                weather.sys.sunrise * 1000
+                              ).toLocaleTimeString()}
+                            </span>
+                          </td>
+                        </tr>
+                        <br />
+                        <tr className="section2">
+                          <td>
+                            <h4>Sunset :</h4>
+                          </td>
+                          <td>
+                            <span>
+                              {new Date(
+                                weather.sys.sunset * 1000
+                              ).toLocaleTimeString()}
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <div className="date">{dateBuilder(new Date())}</div>
-            </div>
-            <div className="weather-box">
-              <div className="temp">{Math.round(weather.main.temp)}°c</div>
-              <div className="weather">{weather.weather[0].main}</div>
             </div>
           </div>
         ) : (
